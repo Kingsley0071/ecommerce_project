@@ -1,9 +1,10 @@
 # app/models/product.rb
+
 class Product < ApplicationRecord
   belongs_to :category
   has_one_attached :image do |attachable|
-    attachable.variant :thumbnail, resize_to_limit: [300, 200]
-    attachable.variant :large, resize_to_limit: [600, 600]
+    attachable.variant :thumbnail, resize_to_limit: [ 300, 200 ]
+    attachable.variant :large, resize_to_limit: [ 600, 600 ]
   end
   has_many :product_tags, dependent: :destroy
   has_many :tags, through: :product_tags

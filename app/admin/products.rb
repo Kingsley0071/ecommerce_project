@@ -1,4 +1,5 @@
 # app/admin/products.rb
+
 ActiveAdmin.register Product do
   permit_params :name, :description, :price, :stock, :category_id, :image, tag_ids: []
 
@@ -29,7 +30,7 @@ ActiveAdmin.register Product do
   filter :description
   filter :price
   filter :stock
-  filter :category, as: :select, collection: proc { Category.all.pluck(:name, :id) }
+  filter :category, as: :select, collection: proc { Category.all.pluck("name", "id") }
   filter :tags_name_cont, label: "Tag Name"
   filter :created_at
   filter :updated_at

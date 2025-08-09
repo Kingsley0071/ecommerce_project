@@ -1,0 +1,61 @@
+<!-- app/views/carts/show.html.erb -->
+<div class="container my-5">
+  <div class="card shadow">
+    <div class="card-body">
+      <h2 class="card-title mb-4 fw-bold">Your Shopping Cart</h2>
+      <% if @cart_items.any? %>
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Price</th>
+              <th scope="col">Total</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @cart_items.each do |item| %>
+              <tr>
+                <td>
+                  <% if item[:product].image.attached? %>
+                    <%= image_tag item[:product].thumbnail, alt: item[:product].name, class: "img-thumbnail", style: "width: 80px;" %>
+                  <% else %>
+                    <img src="https://via.placeholder.com/80x80?text=No+Image" class="img-thumbnail" style="width: 80px;">
+                  <% end %>
+                  <span class="ms-2"><%= item[:product].name %></span>
+                </td>
+                <td>
+                  <%= form_with url: cart_item_path(item[:product].id), method: :patch, local: true, class: "d-flex align-items-center" do |f| %>
+                    <%= f.number_field :quantity, value: item[:quantity], min: 1, class: "form-control form-control-sm me-2", style: "width: 60px;" %>
+                    <%= f.submit "Update", class: "btn btn-outline-primary btn-sm" %>
+                  <% end %>
+                </td>
+                <td>$<%= number_with_precision(item[:product].price, precision: 2) %></td>
+                <td>$<%= number_with_precision(item[:product].price * item[:quantity], precision: 2) %></td>
+                <td>
+                  <%= button_to "Remove", cart_item_path(item[:product].id), method: :delete, class: "btn btn-outline-danger btn-sm" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-between align-items-center mt-4">
+          <%= link_to "Continue Shopping", products_path, class: "btn btn-outline-secondary" %>
+          <div>
+            <div class="mt-4 d-flex justify-content-end align-items-center gap-3">
+              <span class="fw-bold fs-5">Total: $<%= number_to_currency(@cart_total, unit: "", precision: 2) %></span>
+              <%= link_to "Proceed to Checkout", new_order_path, class: "btn btn-primary btn-lg" %>
+            </div>
+            <div class="mt-3 d-flex justify-content-end">
+              <%= button_to "Pay with Stripe", cart_create_checkout_session_path, method: :post, class: "btn btn-success btn-lg", data: { turbo: false } %>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="alert alert-info">Your cart is empty.</div>
+        <%= link_to "Start Shopping", products_path, class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>

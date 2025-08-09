@@ -1,0 +1,62 @@
+<!-- filepath: /home/kingsley/1009/ecommerce_project/ecommerce_project/app/views/products/index.html.erb -->
+<%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+
+<div class="container mt-4">
+  <div class="card p-3 mb-4 shadow-sm">
+    <strong class="mb-2 d-block fs-5">Browse by Category:</strong>
+    <div class="d-flex flex-wrap gap-2">
+      <% Category.all.each do |category| %>
+        <%= link_to category.name, category_path(category), class: "badge rounded-pill bg-primary-subtle text-primary-emphasis text-decoration-none px-3 py-2 small" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <%= search_form_for @q do |f| %>
+      <div class="input-group">
+        <%= f.search_field :name_or_description_cont, class: "form-control", placeholder: "Search by name or description..." %>
+        <%= f.submit "Search", class: "btn btn-primary" %>
+        <%= link_to "Clear", products_path, class: "btn btn-outline-secondary" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-4">
+    <strong>Filter:</strong>
+    <%= link_to "All", products_path, class: "btn btn-outline-secondary btn-sm mx-1" %>
+    <%= link_to "On Sale", products_path(filter: "on_sale"), class: "btn btn-outline-success btn-sm mx-1" %>
+    <%= link_to "Recently Updated", products_path(filter: "recently_updated"), class: "btn btn-outline-info btn-sm mx-1" %>
+  </div>
+
+  <h1 class="mb-4 fw-bold">All Products</h1>
+  <div class="row">
+    <% @products.each do |product| %>
+      <div class="col-lg-4 col-md-6 col-12 mb-4 d-flex align-items-stretch">
+        <%= render 'shared/product_card', product: product %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    <%= paginate @products %>
+  </div>
+</div>
+
+<style>
+.product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 420px;
+}
+.product-card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.product-card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+</style>

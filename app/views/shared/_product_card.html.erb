@@ -1,0 +1,49 @@
+<!-- filepath: /home/kingsley/1009/ecommerce_project/ecommerce_project/app/views/shared/_product_card.html.erb -->
+<div class="card product-card shadow-sm w-100">
+  <% if product.image.attached? %>
+    <%= image_tag product.image.variant(resize_to_fill: [400, 200]), class: "card-img-top product-card-img", alt: product.name %>
+  <% else %>
+    <img src="https://via.placeholder.com/400x200?text=No+Image" class="card-img-top product-card-img" alt="No image">
+  <% end %>
+  <div class="card-body product-card-body d-flex flex-column">
+    <h5 class="card-title"><%= product.name %></h5>
+    <p class="card-text"><%= truncate(product.description, length: 90) %></p>
+    <p class="card-text fw-bold mb-2">Price: $<%= number_with_precision(product.price, precision: 2) %></p>
+    <div class="mt-auto">
+      <div class="d-grid gap-2 mb-2">
+        <%= link_to "View Details", product_path(product), class: "btn btn-primary btn-lg custom-view-btn" %>
+      </div>
+      <div class="d-grid gap-2">
+        <%= button_to "Add to Cart", cart_items_path(product_id: product.id), method: :post, class: "btn btn-success btn-lg custom-cart-btn" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.custom-view-btn {
+  background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background 0.2s;
+}
+.custom-view-btn:hover, .custom-view-btn:focus {
+  background: linear-gradient(90deg, #1e40af 0%, #2563eb 100%);
+  color: #fff;
+}
+
+.custom-cart-btn {
+  background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background 0.2s;
+}
+.custom-cart-btn:hover, .custom-cart-btn:focus {
+  background: linear-gradient(90deg, #16a34a 0%, #22c55e 100%);
+  color: #fff;
+}
+</style>

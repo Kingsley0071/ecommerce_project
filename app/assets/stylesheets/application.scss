@@ -1,0 +1,22 @@
+// Sassy
+@import "bootstrap";
+
+$primary: #007bff;
+$secondary: #6c757d;
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f8f9fa;
+  color: $secondary;
+
+  header, footer {
+    background: $primary;
+    color: white;
+    padding: 1rem;
+  }
+
+  .card {
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba($primary, 0.1);
+  }
+}

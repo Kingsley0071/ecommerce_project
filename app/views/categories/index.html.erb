@@ -1,0 +1,14 @@
+<%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+
+<div class="container mt-4">
+  <h1 class="mb-4">Categories</h1>
+  <div class="row">
+    <% @categories.each do |category| %>
+      <div class="col-lg-4 col-md-6 col-12 mb-3">
+        <div class="list-group">
+          <%= link_to category.name, category_path(category), class: "list-group-item list-group-item-action" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

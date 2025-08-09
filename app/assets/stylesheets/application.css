@@ -1,0 +1,23 @@
+.card {
+  border-radius: 1rem;
+}
+.card-img-top {
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+img-fluid {
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.badge {
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.badge:hover, .badge:focus {
+  background: #0a58ca !important;
+  color: #fff !important;
+  text-decoration: none;
+}

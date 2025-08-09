@@ -1,0 +1,48 @@
+<!-- filepath: /home/kingsley/1009/ecommerce_project/ecommerce_project/app/views/products/_form.html.erb -->
+<%= form_with(model: product, local: true, html: { multipart: true }) do |form| %>
+  <% if product.errors.any? %>
+    <div class="alert alert-danger">
+      <h4>There were some errors:</h4>
+      <ul>
+        <% product.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, class: "form-control", rows: 4 %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :price, class: "form-label" %>
+    <%= form.number_field :price, step: 0.01, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :category_id, "Category", class: "form-label" %>
+    <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "Select Category" }, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :image, class: "form-label" %>
+    <%= form.file_field :image, direct_upload: true, class: "form-control" %>
+    <% if product.image.attached? %>
+      <div class="mt-2">
+        <%= image_tag product.thumbnail, class: "img-thumbnail", style: "width: 100px; height: 100px;" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", products_path, class: "btn btn-secondary ms-2" %>
+  </div>
+<% end %>

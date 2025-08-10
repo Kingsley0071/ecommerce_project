@@ -70,3 +70,4 @@ gem 'stripe'
 gem 'bootstrap', '~> 5.3.0'
 gem 'image_processing', '~> 1.2'
 gem 'mini_magick', '~> 4.12'
+gem "aws-sdk-s3", require: false

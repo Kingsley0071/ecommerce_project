@@ -1,4 +1,4 @@
-<!-- app/views/products/show.html.erb -->
+<!-- filepath: /home/kingsley/1009/ecommerce_project/ecommerce_project/app/views/products/show.html.erb -->
 <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
 
 <div class="container mt-4">
@@ -6,9 +6,9 @@
     <div class="row">
       <div class="col-md-5 text-center">
         <% if @product.image.attached? %>
-          <%= image_tag @product.large, class: "img-fluid rounded", style: "max-height: 350px; object-fit: contain; background: #f8f9fa;" %>
+          <%= image_tag @product.image.variant(resize_to_limit: [300, 300]), class: "img-fluid rounded", style: "max-height: 350px; object-fit: contain; background: #f8f9fa;" %>
         <% else %>
-          <img src="https://via.placeholder.com/350x350?text=No+Image" class="img-fluid rounded" style: "max-height: 350px; object-fit: contain; background: #f8f9fa;">
+          <img src="https://via.placeholder.com/350x350?text=No+Image" class="img-fluid rounded" style="max-height: 350px; object-fit: contain; background: #f8f9fa;">
         <% end %>
       </div>
       <div class="col-md-7">
@@ -16,7 +16,3 @@
         <p class="lead text-muted mb-4"><%= @product.description %></p>
         <p class="h4 mb-4"><span class="fw-bold text-success">Price:</span> $<%= number_with_precision(@product.price, precision: 2) %></p>
         <%= link_to "Back to Products", products_path, class: "btn btn-outline-primary" %>
-      </div>
-    </div>
-  </div>
-</div>

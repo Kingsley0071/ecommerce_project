@@ -19,9 +19,7 @@ services:
       - db
     environment:
       DATABASE_URL: postgres://postgres:password@db:5432/ecommerce_db
+      RAILS_MASTER_KEY: 3d1413badae619c236ec867ef2986d02
+
 volumes:
   db_data:
-  services:
-  web:
-    environment:
-      - RAILS_MASTER_KEY=3d1413badae619c236ec867ef2986d02

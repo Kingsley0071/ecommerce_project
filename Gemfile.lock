@@ -445,6 +445,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 8.0.2)
   ransack
+  rubocop
   rubocop-rails-omakase
   sassc-rails
   solid_cable

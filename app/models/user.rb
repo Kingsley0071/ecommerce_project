@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   def self.ransackable_associations(auth_object = nil)
-    ["orders"] # Add other associations if needed
+    [ "orders" ] # Add other associations if needed
   end
 
   def admin?

@@ -1,7 +1,7 @@
-require 'stripe'
+require "stripe"
 
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!, except: [ :show ]
 
   def index
     @orders = current_user.orders.order(created_at: :desc)
@@ -74,14 +74,14 @@ end
       line_items = cart.cart_items.map do |item|
         {
           price_data: {
-            currency: 'usd',
+            currency: "usd",
             product_data: {
               name: item.product.name,
-              images: [item.product.image_url].compact # optional, only if image_url exists
+              images: [ item.product.image_url ].compact # optional, only if image_url exists
             },
-            unit_amount: (item.product.price * 100).to_i, # Stripe expects cents
+            unit_amount: (item.product.price * 100).to_i # Stripe expects cents
           },
-          quantity: item.quantity,
+          quantity: item.quantity
         }
       end
     else
@@ -89,21 +89,21 @@ end
         product = Product.find(product_id)
         {
           price_data: {
-            currency: 'usd',
+            currency: "usd",
             product_data: {
-              name: product.name,
+              name: product.name
             },
-            unit_amount: (product.price * 100).to_i,
+            unit_amount: (product.price * 100).to_i
           },
-          quantity: quantity,
+          quantity: quantity
         }
       end
     end
 
     session = Stripe::Checkout::Session.create(
-      payment_method_types: ['card'],
+      payment_method_types: [ "card" ],
       line_items: line_items,
-      mode: 'payment',
+      mode: "payment",
       success_url: orders_url + "?success=true",
       cancel_url: cart_url
     )

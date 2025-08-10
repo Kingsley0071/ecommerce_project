@@ -64,12 +64,12 @@ gem "activeadmin"
 gem "sprockets-rails"
 gem "sassc-rails"
 gem "nokogiri", "~> 1.18"
-gem 'kaminari'
-gem 'ransack'
-gem 'stripe'
-gem 'bootstrap', '~> 5.3.0'
-gem 'image_processing', '~> 1.2'
-gem 'mini_magick', '~> 4.12'
+gem "kaminari"
+gem "ransack"
+gem "stripe"
+gem "bootstrap", "~> 5.3.0"
+gem "image_processing", "~> 1.2"
+gem "mini_magick", "~> 4.12"
 gem "aws-sdk-s3", require: false
-gem "dotenv-rails", groups: [:development, :test]
+gem "dotenv-rails", groups: [ :development, :test ]
 gem "rubocop", require: false

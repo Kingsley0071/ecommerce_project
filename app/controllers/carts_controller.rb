@@ -1,8 +1,8 @@
 # app/controllers/carts_controller.rb
-require 'stripe'
+require "stripe"
 
 class CartsController < ApplicationController
-  before_action :authenticate_user!, only: [:create_checkout_session]
+  before_action :authenticate_user!, only: [ :create_checkout_session ]
 
   def show
     @cart_items = current_cart.map do |product_id, quantity|
@@ -18,7 +18,7 @@ class CartsController < ApplicationController
       product = Product.find(product_id)
       {
         price_data: {
-          currency: 'usd',
+          currency: "usd",
           product_data: {
             name: product.name
           },
@@ -29,9 +29,9 @@ class CartsController < ApplicationController
     end
 
     session = Stripe::Checkout::Session.create(
-      payment_method_types: ['card'],
+      payment_method_types: [ "card" ],
       line_items: line_items,
-      mode: 'payment',
+      mode: "payment",
       success_url: cart_url + "?success=true",
       cancel_url: cart_url + "?canceled=true",
       customer_email: current_user.email
@@ -49,10 +49,10 @@ class CartsController < ApplicationController
     @current_cart ||= (session[:cart] || {})
   end
 end# app/controllers/carts_controller.rb
-require 'stripe'
+require "stripe"
 
 class CartsController < ApplicationController
-  before_action :authenticate_user!, only: [:create_checkout_session]
+  before_action :authenticate_user!, only: [ :create_checkout_session ]
 
   def show
     @cart_items = current_cart.map do |product_id, quantity|
@@ -83,7 +83,7 @@ class CartsController < ApplicationController
       product = Product.find(product_id)
       {
         price_data: {
-          currency: 'usd',
+          currency: "usd",
           product_data: {
             name: product.name
           },
@@ -94,9 +94,9 @@ class CartsController < ApplicationController
     end
 
     session = Stripe::Checkout::Session.create(
-      payment_method_types: ['card'],
+      payment_method_types: [ "card" ],
       line_items: line_items,
-      mode: 'payment',
+      mode: "payment",
       success_url: cart_url + "?success=true",
       cancel_url: cart_url + "?canceled=true",
       customer_email: current_user.email

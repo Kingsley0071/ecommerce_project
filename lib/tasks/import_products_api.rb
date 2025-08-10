@@ -1,5 +1,5 @@
-require 'open-uri'
-require 'json'
+require "open-uri"
+require "json"
 
 url = "https://fakestoreapi.com/products"
 products = JSON.parse(URI.open(url).read)

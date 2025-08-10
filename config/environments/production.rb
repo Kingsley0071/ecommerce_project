@@ -80,7 +80,7 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [ :id ]
 
   # Set up active storage
-  config.active_storage.service = :amazon # or :google
+  # config.active_storage.service = :amazon # or :google
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [

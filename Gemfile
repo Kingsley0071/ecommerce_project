@@ -73,3 +73,4 @@ gem "mini_magick", "~> 4.12"
 gem "aws-sdk-s3", require: false
 gem "dotenv-rails", groups: [ :development, :test ]
 gem "rubocop", require: false
+gem "pg", group: :production

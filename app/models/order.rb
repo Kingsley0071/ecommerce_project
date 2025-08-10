@@ -18,3 +18,14 @@ class Order < ApplicationRecord
   validates :total, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :status, presence: true
 end
+
+after_create :send_order_sms
+
+private
+
+def send_order_sms
+  TwilioService.send_sms(
+    to: customer_phone_number, # Replace with your method to get customer's phone
+    body: "Thank you for your order! Order ##{self.id} has been received."
+  )
+end

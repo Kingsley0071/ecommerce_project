@@ -72,3 +72,4 @@ gem "image_processing", "~> 1.2"
 gem "mini_magick", "~> 4.12"
 gem "dotenv-rails", groups: [ :development, :test ]
 gem "rubocop", require: false
+gem 'twilio-ruby'

@@ -28,5 +28,8 @@ Rails.application.routes.draw do
 
   resources :orders do
     post :create_checkout_session, on: :collection
+
+  resources :products do
+  resources :comments, only: [:create, :edit, :update, :destroy]  
   end
 end

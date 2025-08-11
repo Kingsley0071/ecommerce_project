@@ -1,5 +1,3 @@
-# app/models/product.rb
-
 class Product < ApplicationRecord
   belongs_to :category
   has_one_attached :image do |attachable|
@@ -10,6 +8,7 @@ class Product < ApplicationRecord
   has_many :tags, through: :product_tags
   has_many :order_items
   has_many :orders, through: :order_items
+  has_many :comments, dependent: :destroy # Added association
 
   paginates_per 9
 
@@ -21,7 +20,7 @@ class Product < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w[category order_items orders tags]
+    %w[category order_items orders tags comments] # Added comments
   end
 
   ransacker :tags_name_cont, formatter: proc { |v|

@@ -5,27 +5,27 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   def self.ransackable_associations(auth_object = nil)
-    [ "orders" ] # Add other associations if needed
+    ["orders", "comments"] # Added comments association
   end
 
   def admin?
-  self.admin
+    self.admin
   end
 
   def self.ransackable_attributes(auth_object = nil)
-  [
-    "address",
-    "city",
-    "created_at",
-    "email",
-    "id",
-    "postal_code",
-    "province",
-    "remember_created_at",
-    "reset_password_sent_at",
-    "updated_at",
-    "username"
-  ]
+    [
+      "address",
+      "city",
+      "created_at",
+      "email",
+      "id",
+      "postal_code",
+      "province",
+      "remember_created_at",
+      "reset_password_sent_at",
+      "updated_at",
+      "username"
+    ]
   end
 
   # Validations
@@ -38,4 +38,5 @@ class User < ApplicationRecord
 
   # Associations
   has_many :orders, dependent: :destroy
+  has_many :comments, dependent: :destroy # Added association
 end

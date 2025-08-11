@@ -1,47 +1,74 @@
 <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
 
-<div class="container mt-5">
-  <h2>Order #<%= @order.id %></h2>
-  <p><strong>Date:</strong> <%= @order.created_at.strftime("%Y-%m-%d") %></p>
-  <p><strong>Status:</strong> <%= @order.status %></p>
-  <p><strong>Total:</strong> $<%= @order.total %></p>
-  <p><strong>Shipping Address:</strong> <%= @order.address %>, <%= @order.city %>, <%= @order.province %>, <%= @order.postal_code %></p>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h2 class="card-title mb-4 text-primary fw-bold">
+            <i class="bi bi-receipt"></i> Order #<%= @order.id %>
+          </h2>
+          <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item"><strong>Date:</strong> <%= @order.created_at.strftime("%Y-%m-%d") %></li>
+            <li class="list-group-item"><strong>Status:</strong> 
+              <span class="badge <%= @order.status == 'pending' ? 'bg-warning text-dark' : @order.status == 'paid' ? 'bg-success' : 'bg-info text-dark' %>">
+                <%= @order.status.capitalize %>
+              </span>
+            </li>
+            <li class="list-group-item"><strong>Total:</strong> <span class="text-success fw-bold">$<%= number_with_precision(@order.total, precision: 2) %></span></li>
+            <li class="list-group-item"><strong>Shipping Address:</strong> <%= @order.address %>, <%= @order.city %>, <%= @order.province %>, <%= @order.postal_code %></li>
+          </ul>
 
-  <% if current_user.admin? %>
-    <div class="mb-3">
-      <%= form_with model: @order, url: order_path(@order), method: :patch, local: true do |f| %>
-        <%= f.label :status, "Update Status", class: "form-label" %>
-        <%= f.select :status, ["pending", "paid", "shipped"], {}, class: "form-select d-inline-block w-auto ms-2" %>
-        <%= f.submit "Update Status", class: "btn btn-sm btn-primary ms-2" %>
-      <% end %>
+          <% if current_user.admin? %>
+            <div class="mb-3">
+              <%= form_with model: @order, url: order_path(@order), method: :patch, local: true do |f| %>
+                <div class="row g-2 align-items-center">
+                  <div class="col-auto">
+                    <%= f.label :status, "Update Status", class: "form-label mb-0" %>
+                  </div>
+                  <div class="col-auto">
+                    <%= f.select :status, ["pending", "paid", "shipped"], {}, class: "form-select" %>
+                  </div>
+                  <div class="col-auto">
+                    <%= f.submit "Update Status", class: "btn btn-sm btn-primary" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h4 class="card-title mb-3 text-secondary">Order Items</h4>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                  <th>Unit Price</th>
+                  <th>Tax Rate</th>
+                  <th>Subtotal (incl. tax)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @order.order_items.each do |item| %>
+                  <tr>
+                    <td><%= item.product.name %></td>
+                    <td><%= item.quantity %></td>
+                    <td>$<%= number_with_precision(item.price, precision: 2) %></td>
+                    <td><%= number_to_percentage(item.tax_rate * 100, precision: 2) %></td>
+                    <td>$<%= number_with_precision(item.price * item.quantity * (1 + item.tax_rate), precision: 2) %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <%= link_to "Back to Orders", orders_path, class: "btn btn-outline-secondary mt-3" %>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <h4 class="mt-4">Order Items</h4>
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Unit Price</th>
-          <th>Tax Rate</th>
-          <th>Subtotal (incl. tax)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @order.order_items.each do |item| %>
-          <tr>
-            <td><%= item.product.name %></td>
-            <td><%= item.quantity %></td>
-            <td>$<%= number_with_precision(item.price, precision: 2) %></td>
-            <td><%= number_to_percentage(item.tax_rate * 100, precision: 2) %></td>
-            <td>$<%= number_with_precision(item.price * item.quantity * (1 + item.tax_rate), precision: 2) %></td>
-        </tr>
-     <% end %>
-      </tbody>
-    </table>
   </div>
-
-  <%= link_to "Back to Orders", orders_path, class: "btn btn-outline-secondary mt-3" %>
 </div>

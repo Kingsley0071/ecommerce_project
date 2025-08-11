@@ -19,17 +19,15 @@ Rails.application.routes.draw do
 
   root "products#index"
 
-  resources :products
+  resources :products do
+    resources :comments, only: [:create, :edit, :update, :destroy]
+  end
+
   resources :categories, only: [ :index, :show ]
   resource :cart, only: [ :show ]
   resources :pages, only: [ :show ]
   resources :cart_items, only: [ :create, :update, :destroy ], param: :id
-  resources :orders, only: [ :new, :create, :show, :index, :update ]
-
-  resources :orders do
+  resources :orders, only: [ :new, :create, :show, :index, :update ] do
     post :create_checkout_session, on: :collection
-
-  resources :products do
-  resources :comments, only: [:create, :edit, :update, :destroy]  
   end
 end
